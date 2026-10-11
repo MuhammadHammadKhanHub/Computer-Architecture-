@@ -1,27 +1,17 @@
-
-global main
-extern printf
-
-section .data
-    format db "AL=%d, BL=%d", 10, 0
-
 section .text
-main:
-    mov al, 10
-    mov bl, 20
+global _main
+_main:
+    pushad
 
-    xchg al, bl
+    mov eax, 5
+    mov ebx, 5
 
-    movzx ecx, bl
-    movzx eax, al
+    cmp eax, ebx        ; BEQ R1, R2, TARGET
+    je  TARGET
+    nop                 ; delay slot / flushed instruction
+TARGET:
+    nop
 
-    push ecx
-    push eax
-    push format
-    call printf
-
-    add esp, 12
-
+    popad
     xor eax, eax
     ret
-```

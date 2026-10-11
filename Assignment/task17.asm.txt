@@ -1,25 +1,16 @@
-
-global main
-extern printf
-
-section .data
-    number db 0
-    format db "Value loaded into BL=%d", 10, 0
-
 section .text
-main:
-    mov byte [number], 42
+global _main
+_main:
+    pushad
 
-    mov bl, [number]
+    mov edx, 1
 
-    movzx eax, bl
+    sub edx, 1          ; SUB R4, R4, 1
+    je  EXIT            ; BEQ R4, R0, EXIT
+    nop                 ; delay slot fallback
+EXIT:
+    nop
 
-    push eax
-    push format
-    call printf
-
-    add esp, 8
-
+    popad
     xor eax, eax
     ret
-
